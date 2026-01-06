@@ -27,13 +27,23 @@ const ThreeScene = () => {
     // 场景
     const scene = new THREE.Scene()
 
-    // 灯光配置
-    const pointLight = new THREE.PointLight(0xffffff, 1, 100)
-    pointLight.position.set(5, 0, 0)
+    // 灯光配置 - 增强氛围
+    // 主光源 - 冷色调
+    const pointLight = new THREE.PointLight(0x4a9eff, 1.2, 100)
+    pointLight.position.set(5, 3, 5)
     scene.add(pointLight)
 
+    // 辅助光源 - 暖色调
+    const pointLight2 = new THREE.PointLight(0xff6b9d, 0.8, 100)
+    pointLight2.position.set(-5, -3, -5)
+    scene.add(pointLight2)
+
+    // 环境光 - 柔和的全局照明
+    const ambientLight = new THREE.AmbientLight(0x1a1a2e, 0.4)
+    scene.add(ambientLight)
+
     const sphereSize = 1
-    const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize, 'white')
+    const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize, '#4a9eff')
     scene.add(pointLightHelper)
 
     // 相机
@@ -48,7 +58,8 @@ const ThreeScene = () => {
     // 渲染器
     const renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setSize(containerWidth, containerHeight)
-    renderer.setClearColor('gray')
+    // 设置酷炫的深蓝紫色渐变背景
+    renderer.setClearColor(0x0a0a1a) // 深蓝紫色
     renderer.render(scene, camera)
     mountRef.current.appendChild(renderer.domElement)
 
